@@ -18,5 +18,8 @@
   "homepage": "https://github.com/soebosi/bs-observable#readme",
   "dependencies": {
     "zen-observable": "^0.8.8"
+  },
+  "devDependencies": {
+    "bs-platform": "^4.0.0"
   }
 }
