@@ -1,4 +1,4 @@
 module Subscription = {
   type t;
-  [@bs.send] external unsubscribe : t => unit = "unsubscribe";
+  [@bs.send] external unsubscribe : t => unit = "";
 };
