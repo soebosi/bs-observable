@@ -10,3 +10,7 @@ module SubscriptionObserver = {
   [@bs.send] external complete : unit => unit = "";
 };
 
+type t;
+[@bs.new] [@bs.module]
+external make : ((SubscriptionObserver.t('a), unit) => unit) => t =
+  "zen-observable";
