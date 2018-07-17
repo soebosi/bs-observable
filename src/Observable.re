@@ -6,4 +6,5 @@ external make : ((SubscriptionObserver.t('a), unit) => unit) => t('a) =
 [@bs.send] external subscribe : (t('a), 'a => unit) => Subscription.t = "";
 
 [@bs.send]
-external subscribe : (t('a), 'a => unit) => Subscription.t = "subscribe";
+external forEach : (t('a), ('a, unit => unit) => unit) => Js.Promise.t(unit) =
+  "";
