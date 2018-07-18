@@ -33,4 +33,23 @@ describe("Observable", () => {
        )
     |. ignore
   );
+  testAsync("filter", finish =>
+    Observable.make((observer: SubscriptionObserver.t(int)) => {
+      observer |. SubscriptionObserver.next(10);
+      observer |. SubscriptionObserver.next(20);
+      observer |. SubscriptionObserver.next(30);
+      ignore;
+    })
+    |. Observable.filter(a =>
+         if (a == 20) {
+           true;
+         } else {
+           false;
+         }
+       )
+    |. Observable.subscribe(x =>
+         Expect.expect(x) |> Expect.toBe(20) |> finish
+       )
+    |. ignore
+  );
 });

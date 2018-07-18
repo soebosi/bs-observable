@@ -10,3 +10,5 @@ external forEach : (t('a), ('a, unit => unit) => unit) => Js.Promise.t(unit) =
   "";
 
 [@bs.send] external map : (t('a), 'a => 'b) => t('b) = "";
+
+[@bs.send] external filter : (t('a), 'a => bool) => t('a) = "";
