@@ -14,3 +14,6 @@ external forEach : (t('a), ('a, unit => unit) => unit) => Js.Promise.t(unit) =
 [@bs.send] external filter : (t('a), 'a => bool) => t('a) = "";
 
 [@bs.send] external reduce : (t('a), ('b, 'a) => 'b, 'b) => t('b) = "";
+
+[@bs.send] [@bs.splice]
+external concat : (t('a), array(t('a))) => t('a) = "";

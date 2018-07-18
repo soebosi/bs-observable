@@ -66,4 +66,28 @@ describe("Observable", () => {
        )
     |. ignore
   );
+  testAsync("concat", finish =>
+    Observable.make((observer: SubscriptionObserver.t(int)) => {
+      observer |. SubscriptionObserver.next(10);
+      observer |. SubscriptionObserver.complete();
+      ignore;
+    })
+    |. Observable.concat([|
+         Observable.make((observer: SubscriptionObserver.t(int)) => {
+           observer |. SubscriptionObserver.next(20);
+           observer |. SubscriptionObserver.complete();
+           ignore;
+         }),
+         Observable.make((observer: SubscriptionObserver.t(int)) => {
+           observer |. SubscriptionObserver.next(30);
+           observer |. SubscriptionObserver.complete();
+           ignore;
+         }),
+       |])
+    |. Observable.reduce((acc, value) => [value, ...acc], [])
+    |. Observable.subscribe(x =>
+         Expect.expect(x) |> Expect.toEqual([30, 20, 10]) |> finish
+       )
+    |. ignore
+  );
 });
