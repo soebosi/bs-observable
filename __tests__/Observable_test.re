@@ -22,4 +22,15 @@ describe("Observable", () => {
     |> Js.Promise.then_(() => Js.Promise.resolve())
     |. ignore
   );
+  testAsync("map", finish =>
+    Observable.make((observer: SubscriptionObserver.t(int)) => {
+      observer |. SubscriptionObserver.next(10);
+      ignore;
+    })
+    |. Observable.map(string_of_int)
+    |. Observable.subscribe(x =>
+         Expect.expect(x) |> Expect.toBe("10") |> finish
+       )
+    |. ignore
+  );
 });
