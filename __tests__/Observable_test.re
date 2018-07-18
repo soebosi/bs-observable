@@ -52,4 +52,18 @@ describe("Observable", () => {
        )
     |. ignore
   );
+  testAsync("reduce", finish =>
+    Observable.make((observer: SubscriptionObserver.t(int)) => {
+      observer |. SubscriptionObserver.next(10);
+      observer |. SubscriptionObserver.next(20);
+      observer |. SubscriptionObserver.next(30);
+      observer |. SubscriptionObserver.complete();
+      ignore;
+    })
+    |. Observable.reduce((acc, value) => acc ++ string_of_int(value), "00")
+    |. Observable.subscribe(x =>
+         Expect.expect(x) |> Expect.toBe("00102030") |> finish
+       )
+    |. ignore
+  );
 });
