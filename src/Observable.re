@@ -19,3 +19,6 @@ external forEach : (t('a), ('a, unit => unit) => unit) => Js.Promise.t(unit) =
 external concat : (t('a), array(t('a))) => t('a) = "";
 
 [@bs.send] external flatMap : (t('a), 'a => array('a)) => t('a) = "";
+
+[@bs.module "zen-observable"] [@bs.splice]
+external of_ : array('a) => t('a) = "of";

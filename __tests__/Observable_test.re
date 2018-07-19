@@ -104,4 +104,12 @@ describe("Observable", () => {
        )
     |. ignore
   );
+  testAsync("of", finish =>
+    Observable.of_([|0, 1, 2, 3|])
+    |. Observable.reduce((acc, value) => [value, ...acc], [])
+    |. Observable.subscribe(x =>
+         Expect.expect(x) |> Expect.toEqual([3, 2, 1, 0]) |> finish
+       )
+    |. ignore
+  );
 });
