@@ -90,4 +90,18 @@ describe("Observable", () => {
        )
     |. ignore
   );
+  testAsync("flatMap", finish =>
+    Observable.make((observer: SubscriptionObserver.t(int)) => {
+      observer |. SubscriptionObserver.next(10);
+      observer |. SubscriptionObserver.next(30);
+      observer |. SubscriptionObserver.complete();
+      ignore;
+    })
+    |. Observable.flatMap(x => [|x, x + 10|])
+    |. Observable.reduce((acc, value) => [value, ...acc], [])
+    |. Observable.subscribe(x =>
+         Expect.expect(x) |> Expect.toEqual([40, 30, 20, 10]) |> finish
+       )
+    |. ignore
+  );
 });
