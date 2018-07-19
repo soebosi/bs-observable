@@ -22,3 +22,5 @@ external concat : (t('a), array(t('a))) => t('a) = "";
 
 [@bs.module "zen-observable"] [@bs.splice]
 external of_ : array('a) => t('a) = "of";
+
+[@bs.module "zen-observable"] external from : array('a) => t('a) = "";
