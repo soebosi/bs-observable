@@ -24,3 +24,6 @@ external concat : (t('a), array(t('a))) => t('a) = "";
 external of_ : array('a) => t('a) = "of";
 
 [@bs.module "zen-observable"] external from : array('a) => t('a) = "";
+
+let keepMap = (stream, f) =>
+  stream |. map(f) |. filter(Belt.Option.isSome) |. map(Belt.Option.getExn);
