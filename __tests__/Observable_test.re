@@ -116,12 +116,7 @@ describe("Observable", () => {
   );
   testAsync("keepMap", finish =>
     Observable.from([|0, 1, 2, 3|])
-    |. Observable.keepMap(a =>
-         switch (a) {
-         | a when a mod 2 == 1 => Some(a)
-         | _ => None
-         }
-       )
+    |. Observable.keepMap(a => a mod 2 == 1 ? Some(a) : None)
     |. Observable.reduce((acc, value) => [value, ...acc], [])
     |. Observable.subscribe(x =>
          Expect.expect(x) |> Expect.toEqual([3, 1]) |> finish
