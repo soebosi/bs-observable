@@ -40,13 +40,7 @@ describe("Observable", () => {
       observer |. SubscriptionObserver.next(30);
       ignore;
     })
-    |. Observable.filter(a =>
-         if (a == 20) {
-           true;
-         } else {
-           false;
-         }
-       )
+    |. Observable.filter((==)(20))
     |. Observable.subscribe(x =>
          Expect.expect(x) |> Expect.toBe(20) |> finish
        )
