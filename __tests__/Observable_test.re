@@ -14,12 +14,16 @@ describe("Observable", () => {
   testAsync("forEach", finish =>
     Observable.make((observer: SubscriptionObserver.t(int)) => {
       observer |. SubscriptionObserver.next(10);
+      observer |. SubscriptionObserver.complete();
       ignore;
     })
     |. Observable.forEach((x, _) =>
-         Expect.expect(x) |> Expect.toBe(10) |> finish
+         Expect.expect(x) |> Expect.toBe(10) |> ignore
        )
-    |> Js.Promise.then_(() => Js.Promise.resolve())
+    |> Js.Promise.then_(() => {
+         finish(pass);
+         Js.Promise.resolve();
+       })
     |. ignore
   );
   testAsync("map", finish =>
