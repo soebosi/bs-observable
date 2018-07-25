@@ -28,11 +28,7 @@ describe("Observable", () => {
     |. ignore
   );
   testAsync("forEach", finish =>
-    Observable.make((observer: SubscriptionObserver.t(int)) => {
-      observer |. SubscriptionObserver.next(10);
-      observer |. SubscriptionObserver.complete();
-      ignore;
-    })
+    Observable.from([|10|])
     |. Observable.forEach((x, _) =>
          Expect.expect(x) |> Expect.toBe(10) |> ignore
        )
@@ -43,10 +39,7 @@ describe("Observable", () => {
     |. ignore
   );
   testAsync("map", finish =>
-    Observable.make((observer: SubscriptionObserver.t(int)) => {
-      observer |. SubscriptionObserver.next(10);
-      ignore;
-    })
+    Observable.from([|10|])
     |. Observable.map(string_of_int)
     |. Observable.subscribe(x =>
          Expect.expect(x) |> Expect.toBe("10") |> finish
@@ -67,13 +60,7 @@ describe("Observable", () => {
     |. ignore
   );
   testAsync("reduce", finish =>
-    Observable.make((observer: SubscriptionObserver.t(int)) => {
-      observer |. SubscriptionObserver.next(10);
-      observer |. SubscriptionObserver.next(20);
-      observer |. SubscriptionObserver.next(30);
-      observer |. SubscriptionObserver.complete();
-      ignore;
-    })
+    Observable.from([|10, 20, 30|])
     |. Observable.reduce((acc, value) => acc ++ string_of_int(value), "00")
     |. Observable.subscribe(x =>
          Expect.expect(x) |> Expect.toBe("00102030") |> finish
@@ -81,22 +68,10 @@ describe("Observable", () => {
     |. ignore
   );
   testAsync("concat", finish =>
-    Observable.make((observer: SubscriptionObserver.t(int)) => {
-      observer |. SubscriptionObserver.next(10);
-      observer |. SubscriptionObserver.complete();
-      ignore;
-    })
+    Observable.from([|10|])
     |. Observable.concat([|
-         Observable.make((observer: SubscriptionObserver.t(int)) => {
-           observer |. SubscriptionObserver.next(20);
-           observer |. SubscriptionObserver.complete();
-           ignore;
-         }),
-         Observable.make((observer: SubscriptionObserver.t(int)) => {
-           observer |. SubscriptionObserver.next(30);
-           observer |. SubscriptionObserver.complete();
-           ignore;
-         }),
+         Observable.from([|20|]),
+         Observable.from([|30|]),
        |])
     |. Observable.reduce((acc, value) => [value, ...acc], [])
     |. Observable.subscribe(x =>
@@ -105,12 +80,7 @@ describe("Observable", () => {
     |. ignore
   );
   testAsync("flatMap", finish =>
-    Observable.make((observer: SubscriptionObserver.t(int)) => {
-      observer |. SubscriptionObserver.next(10);
-      observer |. SubscriptionObserver.next(30);
-      observer |. SubscriptionObserver.complete();
-      ignore;
-    })
+    Observable.from([|10, 30|])
     |. Observable.flatMap(x => [|x, x + 10|])
     |. Observable.reduce((acc, value) => [value, ...acc], [])
     |. Observable.subscribe(x =>
