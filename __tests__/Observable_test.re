@@ -1,6 +1,22 @@
 open Jest;
 
 describe("Observable", () => {
+  testAsync("of", finish =>
+    Observable.of_([|0, 1, 2, 3|])
+    |. Observable.reduce((acc, value) => [value, ...acc], [])
+    |. Observable.subscribe(x =>
+         Expect.expect(x) |> Expect.toEqual([3, 2, 1, 0]) |> finish
+       )
+    |. ignore
+  );
+  testAsync("from", finish =>
+    Observable.from([|0, 1, 2, 3|])
+    |. Observable.reduce((acc, value) => [value, ...acc], [])
+    |. Observable.subscribe(x =>
+         Expect.expect(x) |> Expect.toEqual([3, 2, 1, 0]) |> finish
+       )
+    |. ignore
+  );
   testAsync("subscribe", finish =>
     Observable.make((observer: SubscriptionObserver.t(int)) => {
       observer |. SubscriptionObserver.next(10);
@@ -99,22 +115,6 @@ describe("Observable", () => {
     |. Observable.reduce((acc, value) => [value, ...acc], [])
     |. Observable.subscribe(x =>
          Expect.expect(x) |> Expect.toEqual([40, 30, 20, 10]) |> finish
-       )
-    |. ignore
-  );
-  testAsync("of", finish =>
-    Observable.of_([|0, 1, 2, 3|])
-    |. Observable.reduce((acc, value) => [value, ...acc], [])
-    |. Observable.subscribe(x =>
-         Expect.expect(x) |> Expect.toEqual([3, 2, 1, 0]) |> finish
-       )
-    |. ignore
-  );
-  testAsync("from", finish =>
-    Observable.from([|0, 1, 2, 3|])
-    |. Observable.reduce((acc, value) => [value, ...acc], [])
-    |. Observable.subscribe(x =>
-         Expect.expect(x) |> Expect.toEqual([3, 2, 1, 0]) |> finish
        )
     |. ignore
   );
