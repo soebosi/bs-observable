@@ -71,15 +71,6 @@ describe("Observable", () => {
        )
     |. ignore
   );
-  testAsync("flatMap", finish =>
-    Observable.from([|10, 30|])
-    |. Observable.flatMap(x => [|x, x + 10|])
-    |. Observable.reduce((acc, value) => [value, ...acc], [])
-    |. Observable.subscribe(x =>
-         Expect.expect(x) |> Expect.toEqual([40, 30, 20, 10]) |> finish
-       )
-    |. ignore
-  );
   testAsync("keepMap", finish =>
     Observable.from([|0, 1, 2, 3|])
     |. Observable.keepMap(a => a mod 2 == 1 ? Some(a) : None)

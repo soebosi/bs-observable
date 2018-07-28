@@ -18,8 +18,6 @@ external forEach : (t('a), ('a, unit => unit) => unit) => Js.Promise.t(unit) =
 [@bs.send] [@bs.splice]
 external concat : (t('a), array(t('a))) => t('a) = "";
 
-[@bs.send] external flatMap : (t('a), 'a => array('a)) => t('a) = "";
-
 [@bs.module "zen-observable"] external from : array('a) => t('a) = "";
 
 let keepMap = (stream, f) =>
