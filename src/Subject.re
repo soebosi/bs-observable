@@ -3,7 +3,6 @@ class subject ('a) = {
   val mutable observer: option(SubscriptionObserver.t('a)) = None;
   pub make = () : Observable.t('a) =>
     Observable.make((o: SubscriptionObserver.t('a)) => {
-      o |. SubscriptionObserver.next(10);
       observer = Some(o);
       ignore;
     });
