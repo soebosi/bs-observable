@@ -1,15 +1,15 @@
 class subject ('a) = {
-  val mutable observer: option(SubscriptionObserver.t('a)) = None;
+  val observer = ref(None);
   pub make = () => {
     Observable.make((o: SubscriptionObserver.t('a)) => {
-      observer = Some(o);
+      observer := Some(o);
       ignore;
     })
     |. ignore;
     this;
   };
   pub next = v =>
-    Belt.Option.getExn(observer) |. SubscriptionObserver.next(v);
+    Belt.Option.getExn(observer^) |. SubscriptionObserver.next(v);
 };
 
 type t('a) = subject('a);
