@@ -19,4 +19,4 @@ let make = () : t('a) => {
   s#make();
 };
 
-let next = (s: subject('a), v: 'a) => s#next(v);
+let next = (s: t('a), v: 'a) => s#next(v);
