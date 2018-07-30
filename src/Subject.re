@@ -17,7 +17,6 @@ type t('a) = subject('a);
 let make = () : t('a) => {
   let s: t('a) = new subject;
   s#make();
-  s;
 };
 
 let next = (s: subject('a), v: 'a) => s#next(v);
