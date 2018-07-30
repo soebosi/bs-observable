@@ -1,11 +1,13 @@
 class subject ('a) = {
-  as _self;
   val mutable observer: option(SubscriptionObserver.t('a)) = None;
-  pub make = () : Observable.t('a) =>
+  pub make = () => {
     Observable.make((o: SubscriptionObserver.t('a)) => {
       observer = Some(o);
       ignore;
-    });
+    })
+    |. ignore;
+    this;
+  };
   pub next = v =>
     Belt.Option.getExn(observer) |. SubscriptionObserver.next(v);
 };
