@@ -5,7 +5,10 @@ class subject ('a) = {
     stream :=
       Observable.make((o: SubscriptionObserver.t('a)) => {
         observer := Some(o);
-        ignore;
+        () => {
+          observer := None;
+          stream := None;
+        };
       })
       |. Some;
     this;
