@@ -1,15 +1,24 @@
 class subject ('a) = {
   val observer = ref(None);
+  val stream = ref(None);
   pub make = () => {
-    Observable.make((o: SubscriptionObserver.t('a)) => {
-      observer := Some(o);
-      ignore;
-    })
+    stream :=
+      Observable.make((o: SubscriptionObserver.t('a)) => {
+        observer := Some(o);
+        ignore;
+      })
+      |. Some;
+    this;
+  };
+  pub next = v => {
+    Belt.Option.map(observer^, o => o |. SubscriptionObserver.next(v))
     |. ignore;
     this;
   };
-  pub next = v =>
-    Belt.Option.getExn(observer^) |. SubscriptionObserver.next(v);
+  pub complete = () =>
+    Belt.Option.map(observer^, o => o |. SubscriptionObserver.complete())
+    |. ignore;
+  pub stream = () => Belt.Option.getExn(stream^);
 };
 
 type t('a) = subject('a);
@@ -20,3 +29,7 @@ let make = () : t('a) => {
 };
 
 let next = (s: t('a), v: 'a) => s#next(v);
+
+let complete = (s: t('a)) => s#complete();
+
+let asStream = (s: t('a)) => s#stream();
