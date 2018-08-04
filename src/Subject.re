@@ -21,6 +21,9 @@ class subject ('a) = {
   pub complete = () =>
     Belt.Option.map(observer^, o => o |. SubscriptionObserver.complete())
     |. ignore;
+  pub error = v =>
+    Belt.Option.map(observer^, o => o |. SubscriptionObserver.error(v))
+    |. ignore;
   pub stream = () => Belt.Option.getExn(stream^);
 };
 
@@ -32,6 +35,8 @@ let make = () : t('a) => {
 };
 
 let next = (s: t('a), v: 'a) => s#next(v);
+
+let error = (s: t('a), v: 'a) => s#error(v);
 
 let complete = (s: t('a)) => s#complete();
 
