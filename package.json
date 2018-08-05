@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@glennsl/bs-jest": "^0.4.2",
-    "bs-platform": "^4.0.0",
+    "bs-platform": "^4.0.3",
     "reason-cli": "^3.2.0-linux"
   }
 }
